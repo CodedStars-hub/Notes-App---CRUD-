@@ -7,20 +7,31 @@ app.use(express.json())
 
 const notes = []
 
-app.post('./notes', (req, res) =>{
+app.post('/notes', (req, res) => {
     notes.push(req.body),
 
-    res.send(201).json({
-        message: "note created successfully"
-    }) 
+        res.status(201).json({
+            message: "note created successfully"
+        })
 })
 
-app.get('./notes',(req, res)=>{
+app.get('/notes', (req, res)=>{
     res.status(200).json({
-        message: "notes fetched successfully",
-        notes: notes
+        message: "Note fetched successfully",
+        notes : notes
     })
 })
+
+app.delete('/notes/index', (req, res) =>{
+    const idx = req.params.index
+
+    delete notes[index]
+
+    res.status(200).json({
+        message : "note deleted successfully"
+    })
+})
+
 
 
 module.exports = app
