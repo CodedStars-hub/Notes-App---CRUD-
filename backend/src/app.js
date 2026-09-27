@@ -34,7 +34,7 @@ app.patch('/notes/:index', (req, res)=>{
     const idx = req.params.index
     const desc = req.body.description
 
-    notes[index].description = desc
+    notes[idx].description = desc
 
     res.status(200).json({
         message: "note updated successfully"
