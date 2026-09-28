@@ -1,7 +1,9 @@
 const express = require('express')
-const noteModel = require('./models/note.model')
+
 const app = express()
-app.use(express.json())
+app.use(express.json());
+const noteModel = require('./models/note.model')
+
 
 
 app.post('/notes', async(req, res)=>{
@@ -29,9 +31,7 @@ app.get('/notes', async(req, res)=>{
 */
 
 app.get('/notes', async(req, res)=>{
-    const notes = await noteModel.findOne({            // findOne return a particular single note. can put this condition with find() as well.
-        title : "test_note_4"
-    })
+    const notes = await noteModel.find()
 
     res.status(200).json({
         message: "Note fetched successfully",
@@ -44,5 +44,31 @@ find => [{},{}] or []
 findOne => {} or null
  */
 
+
+
+
+app.delete('/notes/:id', async(req, res)=>{
+    const id = req.params.id
+
+    await noteModel.findOneAndDelete({
+        _id : id
+    })
+
+    res.status(200).json({
+        message: "note deleted successfully"
+    })
+})
+
+app.patch('/notes/:id', async(req, res)=>{
+
+    const id = req.params.id
+    const description = req.body.description
+
+    await noteModel.findOneAndUpdate({_id: id}, {description: description})
+
+    res.status(200).json({
+        message: "Note Updated"
+    })
+})
 
 module.exports = app
